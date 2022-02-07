@@ -17,4 +17,9 @@ log = logging.getLogger('RFID')
 log.info(f'PROJECT Path : {PROJECT_PATH}')
 log.info(f'Source Path  : {source_dir}')
 
+# Read rfid from environment
+
+# Call to Database
 update_db(source_dir)
+
+#
