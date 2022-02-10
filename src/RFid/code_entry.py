@@ -31,7 +31,8 @@ log.info(f'Source Path  : {source_dir}')
 
 # Read rfid from environment
 Tags_detected = read_curr_tags(source_dir)
-print (f'Currently scanned tags: {Tags_detected}')
+
+print (f'{len(Tags_detected)} Tags found after Scanning: {Tags_detected}')
 
 # Read all Tags from previous vehicle state
 prev_tags = read_prev_Tags(source_dir)
@@ -50,14 +51,16 @@ for tag in Tags_detected:
 # Find missing tags (which was previously assembled)
 if missing_cntr > 0:
     missing_org_tag = set(prev_tags) - set(Tags_detected)
+
+    # TODO for multiple tags 
+    print (missing_org_tag)
     miss_tag = str(list(missing_org_tag)[0])
-    log.info(f'Missing tags: {miss_tag}')
+    log.info(f'Total {missing_cntr} missing tags detected : >> {miss_tag}')
     discover_name_from_tag(source_dir, miss_tag) # Get the Part name of the tag
 else:
-    print ('Yieee !! All Genuine parts are present ')
+    print ('Yieee !! All Genuine parts are there ')
 
 
-
-
-
-#
+    # TODO - if less number of tags are present during scan,, build logic
+    # One original Tag Missing (damage/tear/missing) - Not able to read
+    

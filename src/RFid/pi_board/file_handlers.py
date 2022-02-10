@@ -49,8 +49,7 @@ def read_curr_tags(location: Path):
     with open(txt_file, 'r') as reader:
         lines = [line.rstrip() for line in reader]
     
-    log.info(f'Total {len(lines)} tags found after the scan !')
-    log.info(f'Scanned Tags are : {lines}')
+    log.info(f'{len(lines)} Tags found after Scanning: >> {lines}')
             
     # print (lines)
     return lines
