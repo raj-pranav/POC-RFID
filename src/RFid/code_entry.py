@@ -4,7 +4,7 @@ from pathlib import Path
 import logging
 
 from RFid.logging_setup import setup_log
-from RFid.pi_board.DB import create_tables, update_PREV_VEH_STATE, update_RFID_TAGS, read_prev_Tags, discover_name_from_tag
+from RFid.pi_board.DB import create_tables, update_PREV_VEH_STATE, update_RFID_TAGS, read_prev_Tags, discover_misplaced_tag, discover_missing_tag
 from RFid.pi_board.file_handlers import read_prev_data, read_tags_record, read_curr_tags
 
 # Path configuration
@@ -29,38 +29,56 @@ log.info(f'Source Path  : {source_dir}')
 # tags_internal = read_tags_record(source_dir)
 # update_RFID_TAGS(source_dir, tags_internal)
 
-# Read rfid from environment
-Tags_detected = read_curr_tags(source_dir)
-
-print (f'{len(Tags_detected)} Tags found after Scanning: {Tags_detected}')
-
 # Read all Tags from previous vehicle state
 prev_tags = read_prev_Tags(source_dir)
 log.info(f'Previously available Tags: {prev_tags}')
 # print (f'Previous Tags: {prev_tags}')
 
+# Read rfid from environment
+Tags_detected = read_curr_tags(source_dir)
+
+print (f'{len(Tags_detected)} Tags found after Scanning: {Tags_detected}')
+
 # compare the tags value
-missing_cntr = 0
+unknown_tags = []
 for tag in Tags_detected:
     if tag not in prev_tags:
-        missing_cntr += 1
-        print (f'Missing Tag Alert !!  <<{tag}>> is a new UN-identified Tag')
-    # else:
-    #     print ('Same as Previous')
+        unknown_tags.append(tag)
+        print (f'Unknown Tag Alert !!  <<{tag}>> is a new UN-identified Tag')
 
-# Find missing tags (which was previously assembled)
-if missing_cntr > 0:
-    missing_org_tag = set(prev_tags) - set(Tags_detected)
-
-    # TODO for multiple tags 
-    print (missing_org_tag)
-    miss_tag = str(list(missing_org_tag)[0])
-    log.info(f'Total {missing_cntr} missing tags detected : >> {miss_tag}')
-    discover_name_from_tag(source_dir, miss_tag) # Get the Part name of the tag
-else:
-    print ('Yieee !! All Genuine parts are there ')
+log.info(f'Total {len(unknown_tags)} unknown tags detected : >> {unknown_tags}')
 
 
-    # TODO - if less number of tags are present during scan,, build logic
-    # One original Tag Missing (damage/tear/missing) - Not able to read
+# To detect any misplaced tag
+if (len(unknown_tags) > 0) and (len(prev_tags) == len(Tags_detected)):
+    print ('INFO about misplaced original Tags )')
+    misplace_org_tags = list(set(prev_tags) - set(Tags_detected))
     
+    sync_uT = 0 # to get value from unknown tag basket
+    for m_tag in misplace_org_tags:
+        discover_misplaced_tag(source_dir, m_tag, unknown_tags[sync_uT]) # Get the Part name with tag
+        sync_uT += 1
+
+
+# Some of original tag(s) are missing
+if (len(unknown_tags) == 0) and (len(prev_tags) > len(Tags_detected)):
+    print ('INFO about original missing Tags ...')
+    missing_org_tags = list(set(prev_tags) - set(Tags_detected))
+
+    for mis_tag in missing_org_tags:
+        discover_missing_tag(source_dir, mis_tag)
+
+
+# for both missing and misplaced
+if (len(unknown_tags) > 0) or (len(prev_tags) >= len(Tags_detected)):
+    missing_org_tags = list(set(prev_tags) - set(Tags_detected))
+
+    if missing_org_tags == []:
+        print ('Yieee !! All Genuine parts are present & unaffected ')
+    else:
+        print ('INFO on missing/misplace tags ...')
+
+        for mis_tag in missing_org_tags:
+            discover_missing_tag(source_dir, mis_tag)
+
+

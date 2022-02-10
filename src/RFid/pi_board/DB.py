@@ -71,7 +71,7 @@ def read_prev_Tags(location):
     return output
 
     
-def discover_name_from_tag(location, tag:str):
+def discover_misplaced_tag(location, tag:str, uT):
 
     conn = sqlite3.connect(Path(location) / DB_NAME)
     cur = conn.cursor()
@@ -79,10 +79,26 @@ def discover_name_from_tag(location, tag:str):
     cur.execute("SELECT rfid_tag, part_name from RFID_TAGS WHERE rfid_tag = ?", (tag,))
     _name = cur.fetchall()
 
-    print (f'Misplaced Part-Name with previous tag: {_name}')
+    log.info(f'{_name} was Orginal part, has been misplaced by {uT} !!')
+    
+    print (f'{_name} >> has been Misplaced by {uT} !!')
 
     conn.close()
 
+
+def discover_missing_tag(location, tag:str):
+
+    conn = sqlite3.connect(Path(location) / DB_NAME)
+    cur = conn.cursor()
+
+    cur.execute("SELECT rfid_tag, part_name from RFID_TAGS WHERE rfid_tag = ?", (tag,))
+    _name = cur.fetchall()
+
+    log.info(f'{_name} -> missing from vehicle !')
+    
+    print (f'{_name} -> missing from vehicle !')
+
+    conn.close()
 
     # Make change permanent and close db connection
     # conn.commit()
