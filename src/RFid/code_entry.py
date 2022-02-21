@@ -3,9 +3,13 @@ from os import getcwd
 from pathlib import Path
 import logging
 
+import sys
+sys.path.append('/home/pi/Documents/POC-RFID/src')
+
 from RFid.logging_setup import setup_log
 from RFid.pi_board.DB import create_tables, update_PREV_VEH_STATE, update_RFID_TAGS, read_prev_Tags, discover_misplaced_tag, discover_missing_tag
 from RFid.pi_board.file_handlers import read_prev_data, read_tags_record, read_curr_tags
+from RFid.pi_board.read_rfid import read_live_tags
 
 # Path configuration
 PROJECT_PATH = getcwd()
@@ -35,7 +39,8 @@ log.info(f'Previously available Tags: {prev_tags}')
 # print (f'Previous Tags: {prev_tags}')
 
 # Read rfid from environment
-Tags_detected = read_curr_tags(source_dir)
+Tags_detected = read_live_tags(20)
+# Tags_detected = read_curr_tags(source_dir)
 
 print (f'{len(Tags_detected)} Tags found after Scanning: {Tags_detected}')
 
