@@ -24,14 +24,14 @@ log.info(f'PROJECT Path : {PROJECT_PATH}')
 log.info(f'Source Path  : {source_dir}')
 
 # Creating DB and tables inside - onetime task
-create_tables(source_dir)
+# create_tables(source_dir)
 
 # Read from file & update database
-prev_values = read_prev_data(source_dir)
-update_PREV_VEH_STATE(source_dir, prev_values)
+# prev_values = read_prev_data(source_dir)
+# update_PREV_VEH_STATE(source_dir, prev_values)
 
-tags_internal = read_tags_record(source_dir)
-update_RFID_TAGS(source_dir, tags_internal)
+# tags_internal = read_tags_record(source_dir)
+# update_RFID_TAGS(source_dir, tags_internal)
 
 # Read all Tags from previous vehicle state
 prev_tags = read_prev_Tags(source_dir)
@@ -51,7 +51,7 @@ for tag in Tags_detected:
         unknown_tags.append(tag)
         print (f'Unknown Tag Alert !!  <<{tag}>> is a new UN-identified Tag')
 
-log.info(f'Total {len(unknown_tags)} unknown tags detected : >> {unknown_tags}')
+log.info(f'{len(unknown_tags)} unknown tags detected : >> {unknown_tags}')
 
 
 # To detect any misplaced tag

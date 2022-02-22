@@ -41,7 +41,7 @@ def update_PREV_VEH_STATE(location, values):
     print ('Data successfully added to table: PREV_VEH_STATE !')
     conn.close()
 
-# Insert date in RFID_TAGS table
+# Insert data in RFID_TAGS table
 def update_RFID_TAGS(location, values):
     conn = sqlite3.connect(Path(location) / DB_NAME)
     cur = conn.cursor()
