@@ -16,7 +16,7 @@ def read_live_tags(timeout_s):
     print(f"Start of RFid Read for [{set_timeout}s]... ")
     
     while (time.time() < (start_time+set_timeout)) :
-        curr_card = RFid_reader.read(timeout = 3.0)
+        curr_card = RFid_reader.read()
         Tag_id = str(curr_card.value)
         # print (f"Started at {start_time} and current time is {time.time()}")
         

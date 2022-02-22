@@ -39,7 +39,7 @@ log.info(f'Previously available Tags: {prev_tags}')
 # print (f'Previous Tags: {prev_tags}')
 
 # Read rfid from environment
-Tags_detected = read_live_tags(15)
+Tags_detected = read_live_tags(20)
 # Tags_detected = read_curr_tags(source_dir)
 
 print (f'{len(Tags_detected)} Tags found after Scanning: {Tags_detected}')
