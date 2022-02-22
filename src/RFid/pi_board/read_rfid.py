@@ -15,13 +15,15 @@ def read_live_tags(timeout_s):
     RFid_reader = rdm6300.Reader('/dev/ttyS0')
     print(f"Start of RFid Read for [{set_timeout}s]... ")
     
-    while (time.time() <= (start_time+set_timeout)) :
+    while (time.time() < (start_time+set_timeout)) :
         curr_card = RFid_reader.read()
         Tag_id = str(curr_card.value)
+        print (f"Started at {start_time} and current time is {time.time()}")
         
         if Tag_id not in Total_tags_found:
             Total_tags_found.append(Tag_id)
             print (f"Current Tag id: {Tag_id}")
+     
     
     return Total_tags_found
 
