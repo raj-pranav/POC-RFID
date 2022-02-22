@@ -16,9 +16,9 @@ def read_live_tags(timeout_s):
     print(f"Start of RFid Read for [{set_timeout}s]... ")
     
     while (time.time() < (start_time+set_timeout)) :
-        curr_card = RFid_reader.read()
+        curr_card = RFid_reader.read(timeout = 3.0)
         Tag_id = str(curr_card.value)
-        print (f"Started at {start_time} and current time is {time.time()}")
+        # print (f"Started at {start_time} and current time is {time.time()}")
         
         if Tag_id not in Total_tags_found:
             Total_tags_found.append(Tag_id)
