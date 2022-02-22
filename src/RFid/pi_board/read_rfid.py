@@ -17,10 +17,10 @@ def read_live_tags(timeout_s):
     
     while (time.time() <= (start_time+set_timeout)) :
         curr_card = RFid_reader.read()
-        Tag_id = curr_card.value
+        Tag_id = str(curr_card.value)
         
         if Tag_id not in Total_tags_found:
-            Total_tags_found.append(str(Tag_id))
+            Total_tags_found.append(Tag_id)
             print (f"Current Tag id: {Tag_id}")
     
     return Total_tags_found
