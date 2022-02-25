@@ -17,10 +17,8 @@ GPIO.setmode(GPIO.BOARD)
 
 
 def trigger_buz(intensity, duration):
-    print ("Trigger started ..")
     GPIO.setup(buzzerPin, GPIO.OUT)
     pi_pwm = GPIO.PWM(buzzerPin, 500)  # pin with frequency
-
     pi_pwm.start(0) # Start with this duty cycle
 
     # set a pwm between 0 - 100
@@ -28,7 +26,6 @@ def trigger_buz(intensity, duration):
     time.sleep(duration)
     pi_pwm.stop()
     GPIO.cleanup()
-    print ("Trigger ENDs")
 
 if __name__ == "__main__":
     print ("Executing directly from the same module")

@@ -70,8 +70,7 @@ if (len(unknown_tags) > 0) and (len(prev_tags) == len(Tags_detected)):
 if (len(unknown_tags) == 0) and (len(prev_tags) > len(Tags_detected)):
     print ('INFO about original missing Tags ...')
     missing_org_tags = list(set(prev_tags) - set(Tags_detected))
-    buzzer.trigger_buz(intensity = 2, duration = 3)
-
+    
     for mis_tag in missing_org_tags:
         discover_missing_tag(source_dir, mis_tag)
 
@@ -84,6 +83,7 @@ if (len(unknown_tags) > 0) or (len(prev_tags) >= len(Tags_detected)):
         print ('Yieee !! All Genuine parts are present & unaffected ')
     else:
         print ('INFO on missing/misplace tags ...')
+        buzzer.trigger_buz(intensity = 2, duration = 3)
 
         for mis_tag in missing_org_tags:
             discover_missing_tag(source_dir, mis_tag)
