@@ -18,7 +18,7 @@ GPIO.setmode(GPIO.BOARD)
 GPIO.setup(buzzerPin, GPIO.OUT)
 pi_pwm = GPIO.PWM(buzzerPin, 500)  # pin with frequency
 
-def trigger_buz(intensity = 10, duration = 3):
+def trigger_buz(intensity, duration):
     pi_pwm.start(0) # Start with this duty cycle
 
     # set a pwm between 0 - 100
@@ -27,6 +27,8 @@ def trigger_buz(intensity = 10, duration = 3):
     pi_pwm.stop()
     GPIO.cleanup()
 
+if __name__ == "__main__":
+    trigger_buz(1, 1)
 
 
 """
