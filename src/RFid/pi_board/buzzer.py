@@ -28,7 +28,7 @@ def trigger_buz(intensity, duration):
     GPIO.cleanup()
 
 if __name__ == "__main__":
-    trigger_buz(1, 1)
+    trigger_buz(0, 0)
 
 
 """
