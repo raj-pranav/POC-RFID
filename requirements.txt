@@ -1,3 +1,4 @@
 pyserial
 rdm6300
 web3
+gpiozero
