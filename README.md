@@ -3,7 +3,7 @@
 Poc for vehicle part tracking using RFID
 
 # Connection Diagram : Rpi-RDM6300
-<img src="https://user-images.githubusercontent.com/48473708/155014921-8131f04d-3178-4006-948b-69c2e367b22f.jpg" width = "580">
+<img src="https://user-images.githubusercontent.com/48473708/155964760-52cfd217-03e6-4adf-bd3d-17980a7b6946.jpg" width = "580">
 
 # Actual connection
 
